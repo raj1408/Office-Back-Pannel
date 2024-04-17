@@ -44,15 +44,6 @@ export default function Login() {
   return (
     <div className="form">
       <ul className="tab-group">
-        <li className="tab active">
-          <Link
-            to="/"
-            className={activeLink === "/" ? "active" : ""}
-            onClick={() => handleLinkClick("/")}
-          >
-            Sign Up
-          </Link>
-        </li>
         <li className="tab">
           <Link
             to="/login"

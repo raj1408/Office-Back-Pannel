@@ -28,10 +28,6 @@ function App() {
     <>
       <Routes>
         <Route
-          path="/"
-          element={loggedInUser ? <Navigate to={"/users"} /> : <SignUp />}
-        ></Route>
-        <Route
           path="/login"
           element={loggedInUser ? <Navigate to={"/users"} /> : <Login />}
         ></Route>
