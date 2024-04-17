@@ -129,7 +129,9 @@ export const FirebaseProvider = (props) => {
           createdAt: todoData.createdAt
             ? todoData.createdAt.toDate().toLocaleDateString()
             : "",
-          updatedAt: todoData.updatedAt,
+          updatedAt: todoData.updatedAt
+            ? todoData.updatedAt.toDate().toLocaleDateString()
+            : todoData.createdAt.toDate().toLocaleDateString(),
         };
       });
 
