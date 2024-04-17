@@ -28,21 +28,21 @@ function App() {
     <>
       <Routes>
         <Route
-          path="/login"
+          path="/"
           element={loggedInUser ? <Navigate to={"/users"} /> : <Login />}
         ></Route>
         <Route path="/admin" element={<Admin />}></Route>
         <Route
           path="/users"
-          element={loggedInUser ? <Users /> : <Navigate to={"/login"} />}
+          element={loggedInUser ? <Users /> : <Navigate to={"/"} />}
         ></Route>
         <Route
           path="/task-lists"
-          element={loggedInUser ? <Task_Lists /> : <Navigate to={"/login"} />}
+          element={loggedInUser ? <Task_Lists /> : <Navigate to={"/"} />}
         ></Route>
         <Route
           path="/tasks"
-          element={loggedInUser ? <Tasks /> : <Navigate to={"/login"} />}
+          element={loggedInUser ? <Tasks /> : <Navigate to={"/"} />}
         ></Route>
       </Routes>
     </>
