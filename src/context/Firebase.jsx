@@ -114,11 +114,11 @@ export const FirebaseProvider = (props) => {
 
       const lists = querySnapshot.docs.map(async (doc) => {
         const todoData = doc.data();
-        const title = todoData.title || "";
+        const todoID = doc.id;
 
         // Query tasks related to this ToDo
         const tasksRef = collection(fireStore, "tasks");
-        const taskQuery = query(tasksRef, where("todoTitle", "==", title));
+        const taskQuery = query(tasksRef, where("todoID", "==", todoID));
         const taskQuerySnapshot = await getDocs(taskQuery);
         const totalTasks = taskQuerySnapshot.size;
 
