@@ -118,7 +118,10 @@ export const FirebaseProvider = (props) => {
 
         // Query tasks related to this ToDo
         const tasksRef = collection(fireStore, "tasks");
-        const taskQuery = query(tasksRef, where("todoID", "==", todoID));
+        const taskQuery = query(
+          tasksRef,
+          where("todoID", "==", todoID || "todoTitle", "==", todoData.title)
+        );
         const taskQuerySnapshot = await getDocs(taskQuery);
         const totalTasks = taskQuerySnapshot.size;
 
