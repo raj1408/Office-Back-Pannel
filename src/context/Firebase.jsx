@@ -112,30 +112,39 @@ export const FirebaseProvider = (props) => {
       const q = query(userTodosRef);
       const querySnapshot = await getDocs(q);
 
-      const lists = querySnapshot.docs.map(async (doc) => {
-        const todoData = doc.data();
-        const todoID = doc.id;
+      const lists = await Promise.all(
+        querySnapshot.docs.map(async (doc) => {
+          const todoData = doc.data();
+          const todoID = doc.id;
 
-        // Query tasks related to this ToDo
-        const tasksRef = collection(fireStore, "tasks");
-        const taskQuery = query(tasksRef, where("todoID", "==", todoID));
-        const taskQuerySnapshot = await getDocs(taskQuery);
-        const totalTasks = taskQuerySnapshot.size;
+          // Query tasks related to this ToDo
+          const tasksRef = collection(fireStore, "tasks");
+          const taskQuery = query(tasksRef, where("todoID", "==", todoID));
+          const taskQuerySnapshot = await getDocs(taskQuery);
 
-        return {
-          todoTitle: todoData.title || "",
-          totalTasks,
-          userEmail: todoData.userEmail || "",
-          createdAt: todoData.createdAt
-            ? todoData.createdAt.toDate().toLocaleDateString()
-            : "",
-          updatedAt: todoData.updatedAt
-            ? todoData.updatedAt.toDate().toLocaleDateString()
-            : todoData.createdAt.toDate().toLocaleDateString(),
-        };
-      });
+          // Calculate total tasks accurately
+          let totalTasks = 0;
+          taskQuerySnapshot.forEach((taskDoc) => {
+            if (taskDoc.exists()) {
+              totalTasks++;
+            }
+          });
 
-      return Promise.all(lists);
+          return {
+            todoTitle: todoData.title || "",
+            totalTasks,
+            userEmail: todoData.userEmail || "",
+            createdAt: todoData.createdAt
+              ? todoData.createdAt.toDate().toLocaleDateString()
+              : "",
+            updatedAt: todoData.updatedAt
+              ? todoData.updatedAt.toDate().toLocaleDateString()
+              : todoData.createdAt.toDate().toLocaleDateString(),
+          };
+        })
+      );
+
+      return lists;
     } catch (error) {
       console.log("Error getting ToDo lists from Firestore:", error.message);
       return [];
