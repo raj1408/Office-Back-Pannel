@@ -46,9 +46,9 @@ export default function Login() {
       <ul className="tab-group">
         <li className="tab">
           <Link
-            to="/login"
-            className={activeLink === "/login" ? "active" : ""}
-            onClick={() => handleLinkClick("/login")}
+            to="/"
+            className={activeLink === "/" ? "active" : ""}
+            onClick={() => handleLinkClick("/")}
           >
             Log In
           </Link>
