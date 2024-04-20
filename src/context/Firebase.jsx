@@ -117,12 +117,10 @@ export const FirebaseProvider = (props) => {
           const todoData = doc.data();
           const todoID = doc.id;
 
-          // Query tasks related to this ToDo
           const tasksRef = collection(fireStore, "tasks");
           const taskQuery = query(tasksRef, where("todoID", "==", todoID));
           const taskQuerySnapshot = await getDocs(taskQuery);
 
-          // Calculate total tasks accurately
           let totalTasks = 0;
           taskQuerySnapshot.forEach((taskDoc) => {
             if (taskDoc.exists()) {
